@@ -4,6 +4,9 @@ const User = require('../models/User');
 
 module.exports = {
     async store(req, res) {
+        const { error } = User.validateUser(req.body);
+        if(error) return res.status(400).json({ message: error.details[0].message });
+
         const { email } = req.body;
         let user = await User.findOne({ where: { email } });
         if(user) return res.status(400).json({ message: 'User already exists!' });
