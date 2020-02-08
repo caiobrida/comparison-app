@@ -47,7 +47,7 @@ User.prototype.genAuthToken = function () {
     email: this.email,
     is_admin: this.is_admin,
   },
-  process.env.jwtPrivateKey);
+  process.env.JWT_PRIVATE_KEY);
 
   return token;
 };
