@@ -21,7 +21,7 @@ module.exports = {
 
   async show(req, res) {
     const user = await User.findByPk(req.user.id, {
-      attributes: ['name', 'email', 'id'],
+      attributes: ['id', 'name', 'email'],
     });
     return res.json(user);
   },
