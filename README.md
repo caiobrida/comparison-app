@@ -1,2 +1,2 @@
 # comparison-app
-Projeto em node.js e react.js, SQL
+Projeto em node.js e react.js - SQL
