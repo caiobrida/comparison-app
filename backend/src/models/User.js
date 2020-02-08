@@ -17,6 +17,10 @@ class User extends Model {
     });
   }
 
+  static associate(models) {
+    this.hasMany(models.Repository, { foreignKey: 'owner_user_id', as: 'repositories' });
+  }
+
   static validateUser(user) {
     const schema = {
       name: Joi

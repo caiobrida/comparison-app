@@ -15,7 +15,7 @@ module.exports = {
     user = req.body;
     user.password = await bcrypt.hash(user.password, salt);
 
-    await User.create(user);
+    user = await User.create(user);
     return res.json(user);
   },
 
