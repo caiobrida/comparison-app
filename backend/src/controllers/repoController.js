@@ -30,6 +30,7 @@ module.exports = {
     if (req.user.is_admin) permissions.push('admin');
 
     const user = await User.findByPk(req.user.id, {
+      attributes: ['id', 'name', 'email'],
       include: {
         association: 'repositories',
         where: {
@@ -40,9 +41,9 @@ module.exports = {
       },
     });
 
-    if (!user) return res.status(400).json({ message: 'User not found' });
+    if (!user) return res.status(400).json({ message: 'User repositories not found' });
 
-    return res.json(user.repositories);
+    return res.json(user);
   },
 
   async store(req, res) {

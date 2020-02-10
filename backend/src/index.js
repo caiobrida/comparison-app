@@ -14,7 +14,6 @@ app.use(express.json());
 
 app.use('/users/files', express.static(path.resolve(__dirname, '..', 'uploads', 'users')));
 
-
 app.use(routes);
 
 app.use(error.notFound);
