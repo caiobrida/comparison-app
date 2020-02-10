@@ -20,18 +20,15 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
-
       permission: {
         type: Sequelize.ENUM,
         values: ['admin', 'owner_user', 'all'],
         allowNull: false,
       },
-
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-
       updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
