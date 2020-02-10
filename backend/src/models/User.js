@@ -11,6 +11,16 @@ class User extends Model {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       is_admin: DataTypes.BOOLEAN,
+      avatar: {
+        type: DataTypes.STRING,
+        defaultValue: 'default.jpg',
+      },
+      avatar_url: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${process.env.URL}/users/files/${this.avatar}`;
+        },
+      },
     },
     {
       sequelize,
@@ -26,6 +36,8 @@ class User extends Model {
       name: Joi
         .string()
         .required()
+        .min(2)
+        .max(255)
         .label('Name'),
       email: Joi
         .string()
@@ -38,8 +50,31 @@ class User extends Model {
         .min(6)
         .max(255)
         .label('Password'),
+      avatar: Joi
+        .string()
+        .label('Avatar'),
+      event: Joi
+        .string()
+        .required(),
     };
 
+    return Joi.validate(user, schema);
+  }
+
+  static updateUserValidation(user) {
+    const schema = {
+      name: Joi
+        .string()
+        .min(2)
+        .max(255)
+        .label('Name'),
+      avatar: Joi
+        .string()
+        .label('Avatar'),
+      event: Joi
+        .string()
+        .required(),
+    };
     return Joi.validate(user, schema);
   }
 }

@@ -39,7 +39,7 @@ module.exports = {
       },
     });
 
-    if (!user) res.status(400).json({ message: 'User not found' });
+    if (!user) return res.status(400).json({ message: 'User not found' });
 
     return res.json(user.repositories);
   },
