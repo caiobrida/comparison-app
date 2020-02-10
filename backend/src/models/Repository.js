@@ -18,10 +18,21 @@ class Repository extends Model {
 
   static validateRepo(repo) {
     const schema = {
-      name: Joi.string().required(),
+      name: Joi.string().required().min(1).max(255),
       permission: Joi.string()
         .valid(['admin', 'owner_user', 'all'])
         .required()
+        .min(3)
+        .max(9),
+    };
+    return Joi.validate(repo, schema);
+  }
+
+  static updateRepoValidation(repo) {
+    const schema = {
+      name: Joi.string().min(1).max(255),
+      permission: Joi.string()
+        .valid(['admin', 'owner_user', 'all'])
         .min(3)
         .max(9),
     };

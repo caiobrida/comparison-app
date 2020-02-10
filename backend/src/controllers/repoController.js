@@ -20,6 +20,7 @@ module.exports = {
         },
       },
     });
+    if (!repos) return res.status(400).json({ message: 'Repositories not found' });
 
     return res.json(repos);
   },
@@ -47,9 +48,8 @@ module.exports = {
   async store(req, res) {
     const { error } = Repository.validateRepo(req.body);
     if (error) {
-      return res.status(400).json({
-        message: 'Name is required and permission must be a valid value',
-      });
+      const message = 'Name must have at least one character and permission must be a valid value';
+      return res.status(400).json({ message });
     }
 
     const user = await User.findByPk(req.user.id);
@@ -68,6 +68,34 @@ module.exports = {
     });
 
     return res.json(repository);
+  },
+
+  async update(req, res) {
+    const { error } = Repository.updateRepoValidation(req.body);
+    if (error) {
+      const message = 'Name must have at least one character and permission must be a valid value';
+      return res.status(400).json({ message });
+    }
+
+    const { id, is_admin } = req.user;
+
+    const { repo_id } = req.params;
+    const repo = await Repository.findByPk(repo_id);
+    if (!repo) return res.status(400).json({ message: 'Repository not found' });
+
+    if (repo.permission === 'admin' && !is_admin) return res.status(403).json({ message: 'Unauthorized' });
+
+    if (repo.owner_user_id === id || is_admin) {
+      const { name, permission } = req.body;
+      if (permission === 'admin' && !is_admin) return res.status(403).json({ message: 'Unauthorized' });
+
+      repo.name = name;
+      repo.permission = permission;
+
+      await repo.save();
+      return res.json(repo);
+    }
+    return res.status(403).json({ message: 'Unauthorized' });
   },
 
   async destroy(req, res) {
