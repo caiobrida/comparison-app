@@ -14,6 +14,7 @@ class Repository extends Model {
 
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'owner_user_id', as: 'users' });
+    this.belongsToMany(models.Comparison, { foreignKey: 'repo_id', through: 'repo_comparisons', as: 'comparisons' });
   }
 
   static validateRepo(repo) {

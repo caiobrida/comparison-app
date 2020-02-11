@@ -14,6 +14,11 @@ class Comparison extends Model {
     });
   }
 
+  static associate(models) {
+    this.belongsTo(models.User, { foreignKey: 'owner_user_id', as: 'users' });
+    this.belongsToMany(models.Repository, { foreignKey: 'comparison_id', through: 'repo_comparisons', as: 'repositories' });
+  }
+
   static validateComparison(comparison) {
     const schema = {
       name: Joi
@@ -24,12 +29,11 @@ class Comparison extends Model {
         .label('Name'),
       img1: Joi
         .string()
-        .required()
         .label('First Image'),
       img2: Joi
         .string()
-        .required()
         .label('Second Image'),
+      event: Joi.string().required(),
     };
     return Joi.validate(comparison, schema);
   }

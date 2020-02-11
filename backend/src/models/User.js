@@ -29,6 +29,7 @@ class User extends Model {
 
   static associate(models) {
     this.hasMany(models.Repository, { foreignKey: 'owner_user_id', as: 'repositories' });
+    this.hasMany(models.Comparison, { foreignKey: 'owner_user_id', as: 'comparisons' });
   }
 
   static validateUser(user) {

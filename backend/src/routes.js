@@ -7,6 +7,7 @@ const uploadConfig = require('./config/upload');
 const userController = require('./controllers/userController');
 const authController = require('./controllers/authController');
 const repoController = require('./controllers/repoController');
+const comparisonController = require('./controllers/comparisonController');
 
 const routes = express.Router();
 const upload = multer(uploadConfig);
@@ -22,5 +23,12 @@ routes.get('/myrepos', auth.default, repoController.show);
 routes.post('/repos', auth.default, repoController.store);
 routes.put('/repos/:repo_id', auth.default, repoController.update);
 routes.delete('/repos/:repo_id', auth.default, repoController.destroy);
+
+routes.post('/comparisons/:repo_id',
+  [auth.default, upload.fields([
+    { name: 'img1', maxCount: 1 },
+    { name: 'img2', maxCount: 1 },
+  ])],
+  comparisonController.store);
 
 module.exports = routes;
