@@ -5,9 +5,9 @@ const mkdirp = require('mkdirp');
 module.exports = {
   storage: multer.diskStorage({
     destination: async (req, file, cb) => {
-      const pathToFile = path.resolve(__dirname, '..', '..', 'uploads', 'comparisons', req.body.name);
+      const pathToFolder = path.resolve(__dirname, '..', '..', 'uploads', 'comparisons', req.body.name);
       if (req.body.event === 'comparisons-create') {
-        const made = await mkdirp(pathToFile);
+        const made = await mkdirp(pathToFolder);
         if (!made) {
           req.error = true;
 
@@ -18,8 +18,8 @@ module.exports = {
           cb(errorDisplay);
         }
 
-        req.pathToFile = pathToFile;
-        cb(null, pathToFile);
+        req.pathToFolder = pathToFolder;
+        cb(null, pathToFolder);
       } else {
         cb(null, path.resolve(__dirname, '..', '..', 'uploads', 'users'));
       }

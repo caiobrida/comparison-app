@@ -27,8 +27,10 @@ module.exports = {
     });
     if (comparison) return res.status(400).json({ message: 'Name already in use' });
 
-    const { pathToFile } = req;
-    genDiff(img1[0].filename, img2[0].filename, pathToFile);
+    const { pathToFolder } = req;
+    const madeDiff = genDiff(img1[0].filename, img2[0].filename, pathToFolder);
+
+    if (!madeDiff) return res.status(400).json({ message: 'Only .jpg and .png avaliable' });
 
     comparison = await Comparison.create({
       name,
