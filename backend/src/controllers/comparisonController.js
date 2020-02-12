@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 const { Op } = require('sequelize');
-const path = require('path');
 
 const Comparison = require('../models/Comparison');
 const Repository = require('../models/Repository');
@@ -28,8 +27,8 @@ module.exports = {
     });
     if (comparison) return res.status(400).json({ message: 'Name already in use' });
 
-    const pathToFolder = path.resolve('uploads', 'comparisons', name);
-    genDiff(img1[0].filename, img2[0].filename, pathToFolder);
+    const { pathToFile } = req;
+    genDiff(img1[0].filename, img2[0].filename, pathToFile);
 
     comparison = await Comparison.create({
       name,
