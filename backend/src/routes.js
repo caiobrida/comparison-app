@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 
 const auth = require('./middlewares/auth');
+const authorizeComp = require('./middlewares/authorizeComp');
 const uploadConfig = require('./config/upload');
 
 const userController = require('./controllers/userController');
@@ -30,5 +31,11 @@ routes.post('/comparisons/:repo_id',
     { name: 'img2', maxCount: 1 },
   ])],
   comparisonController.store);
+routes.put('/comparisons/:repo_id/:comp_name',
+  [auth.default, authorizeComp, upload.fields([
+    { name: 'img1', maxCount: 1 },
+    { name: 'img2', maxCount: 1 },
+  ])],
+  comparisonController.update);
 
 module.exports = routes;

@@ -37,6 +37,24 @@ class Comparison extends Model {
     };
     return Joi.validate(comparison, schema);
   }
+
+  static updateComparisonValidation(comparison) {
+    const schema = {
+      name: Joi
+        .string()
+        .min(1)
+        .max(255)
+        .label('Name'),
+      img1: Joi
+        .string()
+        .label('First Image'),
+      img2: Joi
+        .string()
+        .label('First Image'),
+      event: Joi.string().required(),
+    };
+    return Joi.validate(comparison, schema);
+  }
 }
 
 module.exports = Comparison;

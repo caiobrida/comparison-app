@@ -24,7 +24,6 @@ module.exports = {
     if (repo.permission === 'admin' && !req.user.admin) return res.status(403).json({ message: 'Unauthorized' });
 
     const { name } = req.body;
-    const { img1, img2 } = req.files;
     let comparison = await Comparison.findOne({
       where: {
         name: {
@@ -42,6 +41,7 @@ module.exports = {
     });
     if (comparison) return res.status(400).json({ message: 'Name already in use' });
 
+    const { img1, img2 } = req.files;
     const madeDiff = genDiff(img1[0].filename, img2[0].filename, req.pathToFolder);
 
     if (!madeDiff) {
@@ -62,4 +62,41 @@ module.exports = {
     return res.json(comparison);
   },
 
+  async update(req, res) {
+    const { repo_id, comp_name } = req.params;
+    const comparison = await Comparison.findOne({
+      where: {
+        name: {
+          [Op.like]: comp_name,
+        },
+      },
+      include: {
+        association: 'repositories',
+        where: {
+          id: {
+            [Op.eq]: repo_id,
+          },
+        },
+      },
+    });
+
+    if (!comparison) return res.status(400).json({ message: 'Comparison not found' });
+
+    const { img1, img2 } = req.files;
+    const madeDiff = genDiff(img1[0].filename, img2[0].filename, req.pathToFolder);
+
+    if (!madeDiff) {
+      rimraf(req.pathToFolder, (err) => console.log(err));
+      return res.status(400).json({ message: 'Only .jpg and .png avaliable' });
+    }
+
+    const { name } = req.body;
+
+    comparison.name = name;
+    comparison.img1 = img1[0].filename;
+    comparison.img1 = img2[0].filename;
+
+    await comparison.save();
+    return res.json(comparison);
+  },
 };
