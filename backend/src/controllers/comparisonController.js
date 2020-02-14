@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 const { Op } = require('sequelize');
+const rimraf = require('rimraf');
+
 
 const Comparison = require('../models/Comparison');
 const Repository = require('../models/Repository');
@@ -9,12 +11,17 @@ const { genDiff } = require('../utils/pixelmatch');
 module.exports = {
   async store(req, res) {
     const { error } = Comparison.validateComparison(req.body);
-    if (error) return res.status(400).json({ message: error.details[0].message });
+    if (error) {
+      rimraf(req.pathToFolder, (err) => console.log(err));
+      return res.status(400).json({ message: error.details[0].message });
+    }
 
     const { repo_id } = req.params;
 
     const repo = await Repository.findByPk(repo_id);
     if (!repo) return res.status(400).json({ message: 'Repository not found' });
+
+    if (repo.permission === 'admin' && !req.user.admin) return res.status(403).json({ message: 'Unauthorized' });
 
     const { name } = req.body;
     const { img1, img2 } = req.files;
@@ -24,13 +31,23 @@ module.exports = {
           [Op.like]: name,
         },
       },
+      include: {
+        association: 'repositories',
+        where: {
+          id: {
+            [Op.eq]: repo_id,
+          },
+        },
+      },
     });
     if (comparison) return res.status(400).json({ message: 'Name already in use' });
 
-    const { pathToFolder } = req;
-    const madeDiff = genDiff(img1[0].filename, img2[0].filename, pathToFolder);
+    const madeDiff = genDiff(img1[0].filename, img2[0].filename, req.pathToFolder);
 
-    if (!madeDiff) return res.status(400).json({ message: 'Only .jpg and .png avaliable' });
+    if (!madeDiff) {
+      rimraf(req.pathToFolder, (err) => console.log(err));
+      return res.status(400).json({ message: 'Only .jpg and .png avaliable' });
+    }
 
     comparison = await Comparison.create({
       name,

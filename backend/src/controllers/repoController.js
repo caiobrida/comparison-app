@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
 const { Op } = require('sequelize');
-const mkdirp = require('mkdirp');
-const path = require('path');
 
 const User = require('../models/User');
 const Repository = require('../models/Repository');
@@ -80,9 +78,6 @@ module.exports = {
       owner_user_id: user.id,
     });
 
-    const made = await mkdirp(path.resolve(__dirname, '..', '..', 'uploads', 'repositories', String(repository.dataValues.id)));
-
-    if (!made) return res.status(500).json({ message: 'Internal error' });
     return res.json(repository);
   },
 
