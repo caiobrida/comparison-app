@@ -3,7 +3,6 @@ const { Op } = require('sequelize');
 const rimraf = require('rimraf');
 const path = require('path');
 
-
 const Comparison = require('../models/Comparison');
 const Repository = require('../models/Repository');
 
@@ -44,17 +43,12 @@ module.exports = {
 
   async store(req, res) {
     const { error } = Comparison.validateComparison(req.body);
-    if (error) {
-      rimraf(req.pathToFolder, (err) => console.log(err));
-      return res.status(400).json({ message: error.details[0].message });
-    }
+    if (error) return res.status(400).json({ message: error.details[0].message });
 
     const { repo_id } = req.params;
 
     const repo = await Repository.findByPk(repo_id);
     if (!repo) return res.status(400).json({ message: 'Repository not found' });
-
-    if (repo.permission === 'admin' && !req.user.admin) return res.status(403).json({ message: 'Unauthorized' });
 
     const { name } = req.body;
     let comparison = await Comparison.findOne({
@@ -75,18 +69,15 @@ module.exports = {
     if (comparison) return res.status(400).json({ message: 'Name already in use' });
 
     const { img1, img2 } = req.files;
-    const madeDiff = genDiff(img1[0].filename, img2[0].filename, req.pathToFolder);
+    const diff = genDiff(img1[0].filename, img2[0].filename, req.pathToFolder);
 
-    if (!madeDiff) {
-      rimraf(req.pathToFolder, (err) => console.log(err));
-      return res.status(400).json({ message: 'Only .jpg and .png avaliable' });
-    }
+    if (!diff) return res.status(400).json({ message: 'Only .jpg and .png avaliable' });
 
     comparison = await Comparison.create({
       name,
       img1: img1[0].filename,
       img2: img2[0].filename,
-      diff: 'diff.png',
+      diff,
       owner_user_id: req.user.id,
     });
 
@@ -116,18 +107,27 @@ module.exports = {
     if (!comparison) return res.status(400).json({ message: 'Comparison not found' });
 
     const { img1, img2 } = req.files;
-    const madeDiff = genDiff(img1[0].filename, img2[0].filename, req.pathToFolder);
+    const diff = genDiff(img1[0].filename, img2[0].filename, req.pathToFolder);
 
-    if (!madeDiff) {
-      rimraf(req.pathToFolder, (err) => console.log(err));
-      return res.status(400).json({ message: 'Only .jpg and .png avaliable' });
-    }
+    if (!diff) return res.status(400).json({ message: 'Only .jpg and .png avaliable' });
 
     const { name } = req.body;
 
+    const pathToFolder = path.resolve(__dirname, '..', '..', 'uploads', 'comparisons');
+    rimraf(`${pathToFolder}/${comparison.img1}`, (err) => {
+      if (err) res.status(500).json(err);
+    });
+    rimraf(`${pathToFolder}/${comparison.img2}`, (err) => {
+      if (err) res.status(500).json(err);
+    });
+    rimraf(`${pathToFolder}/${comparison.diff}`, (err) => {
+      if (err) res.status(500).json(err);
+    });
+
     comparison.name = name;
     comparison.img1 = img1[0].filename;
-    comparison.img1 = img2[0].filename;
+    comparison.img2 = img2[0].filename;
+    comparison.diff = diff;
 
     await comparison.save();
     return res.json(comparison);
@@ -154,13 +154,20 @@ module.exports = {
     });
     if (!comparison) return res.status(400).json({ message: 'Comparison not found' });
 
+    const pathToFolder = path.resolve(__dirname, '..', '..', 'uploads', 'comparisons');
+    rimraf(`${pathToFolder}/${comparison.img1}`, (err) => {
+      if (err) res.status(500).json(err);
+    });
+    rimraf(`${pathToFolder}/${comparison.img2}`, (err) => {
+      if (err) res.status(500).json(err);
+    });
+    rimraf(`${pathToFolder}/${comparison.diff}`, (err) => {
+      if (err) res.status(500).json(err);
+    });
+
     await repo.removeComparison(comparison);
     await comparison.destroy();
 
-    const pathToFolder = path.resolve(__dirname, '..', '..', 'uploads', 'repositories', repo_id, comp_name);
-    rimraf(pathToFolder, (err) => {
-      if (err) res.status(500).json(err);
-    });
     return res.json({ message: 'Success' });
   },
 };

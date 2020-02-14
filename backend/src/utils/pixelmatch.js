@@ -41,7 +41,8 @@ module.exports = {
 
     pixelmatch(firstImage.data, secondImage.data, diff.data, width, height, { threshold: 0.1 });
 
-    fs.writeFileSync(`${pathToFolder}/diff.png`, PNG.sync.write(diff));
-    return true;
+    const diffName = `diff-${Date.now()}.png`;
+    fs.writeFileSync(`${pathToFolder}/${diffName}`, PNG.sync.write(diff));
+    return diffName;
   },
 };

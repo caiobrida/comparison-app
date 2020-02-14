@@ -13,6 +13,7 @@ app.use(morgan('common'));
 app.use(express.json());
 
 app.use('/users/files', express.static(path.resolve(__dirname, '..', 'uploads', 'users')));
+app.use('/comparisons/files', express.static(path.resolve(__dirname, '..', 'uploads', 'comparisons')));
 
 app.use(routes);
 

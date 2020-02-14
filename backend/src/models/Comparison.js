@@ -7,7 +7,10 @@ class Comparison extends Model {
       name: DataTypes.STRING,
       img1: DataTypes.STRING,
       img2: DataTypes.STRING,
-      diff: DataTypes.STRING,
+      diff: {
+        type: DataTypes.STRING,
+        defaultValue: `diff-${Date.now()}.png`,
+      },
       img1_url: {
         type: DataTypes.VIRTUAL,
         get() {
