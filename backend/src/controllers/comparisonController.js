@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const { Op } = require('sequelize');
 const rimraf = require('rimraf');
+const path = require('path');
 
 
 const Comparison = require('../models/Comparison');
@@ -98,5 +99,36 @@ module.exports = {
 
     await comparison.save();
     return res.json(comparison);
+  },
+
+  async destroy(req, res) {
+    const { comp_name, repo_id } = req.params;
+    const repo = await Repository.findByPk(repo_id);
+
+    const comparison = await Comparison.findOne({
+      where: {
+        name: {
+          [Op.like]: comp_name,
+        },
+      },
+      include: {
+        association: 'repositories',
+        where: {
+          id: {
+            [Op.eq]: repo_id,
+          },
+        },
+      },
+    });
+    if (!comparison) return res.status(400).json({ message: 'Comparison not found' });
+
+    await repo.removeComparison(comparison);
+    await comparison.destroy();
+
+    const pathToFolder = path.resolve(__dirname, '..', '..', 'uploads', 'repositories', repo_id, comp_name);
+    rimraf(pathToFolder, (err) => {
+      if (err) res.status(500).json(err);
+    });
+    return res.json({ message: 'Success' });
   },
 };

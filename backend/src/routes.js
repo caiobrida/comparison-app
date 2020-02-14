@@ -37,5 +37,7 @@ routes.put('/comparisons/:repo_id/:comp_name',
     { name: 'img2', maxCount: 1 },
   ])],
   comparisonController.update);
+routes.delete('/comparisons/:repo_id/:comp_name',
+  [auth.default, authorizeComp], comparisonController.destroy);
 
 module.exports = routes;
