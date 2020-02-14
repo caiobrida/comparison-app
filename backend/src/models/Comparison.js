@@ -8,6 +8,24 @@ class Comparison extends Model {
       img1: DataTypes.STRING,
       img2: DataTypes.STRING,
       diff: DataTypes.STRING,
+      img1_url: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${process.env.URL}/comparisons/files/${this.img1}`;
+        },
+      },
+      img2_url: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${process.env.URL}/comparisons/files/${this.img2}`;
+        },
+      },
+      diff_url: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${process.env.URL}/comparisons/files/${this.diff}`;
+        },
+      },
     },
     {
       sequelize,

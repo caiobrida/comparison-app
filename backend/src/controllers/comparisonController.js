@@ -10,6 +10,25 @@ const Repository = require('../models/Repository');
 const { genDiff } = require('../utils/pixelmatch');
 
 module.exports = {
+  async index(req, res) {
+    const { repo_id } = req.params;
+    const repo = await Repository.findByPk(repo_id, {
+      attributes: ['name', 'permission', 'created_at'],
+      include: [
+        {
+          association: 'comparisons',
+          attributes: ['name', 'created_at'],
+        },
+        {
+          association: 'users',
+          attributes: ['name'],
+        },
+      ],
+    });
+    if (!repo) return res.status(400).json({ message: 'Repository not found' });
+    return res.json(repo);
+  },
+
   async store(req, res) {
     const { error } = Comparison.validateComparison(req.body);
     if (error) {

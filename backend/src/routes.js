@@ -25,6 +25,7 @@ routes.post('/repos', auth.default, repoController.store);
 routes.put('/repos/:repo_id', auth.default, repoController.update);
 routes.delete('/repos/:repo_id', auth.default, repoController.destroy);
 
+routes.get('/comparisons/:repo_id', comparisonController.index);
 routes.post('/comparisons/:repo_id',
   [auth.default, upload.fields([
     { name: 'img1', maxCount: 1 },
