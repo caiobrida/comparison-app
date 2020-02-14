@@ -18,10 +18,10 @@ module.exports = {
         {
           association: 'comparisons',
           attributes: ['name', 'created_at'],
-        },
-        {
-          association: 'users',
-          attributes: ['name'],
+          include: {
+            association: 'users',
+            attributes: ['name'],
+          },
         },
       ],
     });
