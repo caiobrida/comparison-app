@@ -29,6 +29,19 @@ module.exports = {
     return res.json(repo);
   },
 
+  async show(req, res) {
+    const { comp_id } = req.params;
+    const comparison = await Comparison.findByPk(comp_id, {
+      include: {
+        association: 'users',
+        attributes: ['name'],
+      },
+    });
+    if (!comparison) return res.status(400).json({ message: 'Comparison not found' });
+
+    return res.json(comparison);
+  },
+
   async store(req, res) {
     const { error } = Comparison.validateComparison(req.body);
     if (error) {
