@@ -54,9 +54,6 @@ class User extends Model {
       avatar: Joi
         .string()
         .label('Avatar'),
-      event: Joi
-        .string()
-        .required(),
     };
 
     return Joi.validate(user, schema);
@@ -72,9 +69,6 @@ class User extends Model {
       avatar: Joi
         .string()
         .label('Avatar'),
-      event: Joi
-        .string()
-        .required(),
     };
     return Joi.validate(user, schema);
   }

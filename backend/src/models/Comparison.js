@@ -33,7 +33,6 @@ class Comparison extends Model {
       img2: Joi
         .string()
         .label('Second Image'),
-      event: Joi.string().required(),
     };
     return Joi.validate(comparison, schema);
   }
@@ -51,7 +50,6 @@ class Comparison extends Model {
       img2: Joi
         .string()
         .label('First Image'),
-      event: Joi.string().required(),
     };
     return Joi.validate(comparison, schema);
   }

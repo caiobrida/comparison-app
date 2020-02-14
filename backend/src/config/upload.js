@@ -6,7 +6,7 @@ const rimraf = require('rimraf');
 module.exports = {
   storage: multer.diskStorage({
     destination: async (req, file, cb) => {
-      if (req.body.event === 'comparisons-create') {
+      if (req.query.event === 'comparisons-create') {
         const pathToFolder = path.resolve(__dirname, '..', '..', 'uploads', 'repositories', req.params.repo_id, req.body.name);
         const made = await mkdirp(pathToFolder);
         if (!made) {
@@ -21,7 +21,7 @@ module.exports = {
 
         req.pathToFolder = pathToFolder;
         cb(null, pathToFolder);
-      } else if (req.body.event === 'comparisons-update') {
+      } else if (req.query.event === 'comparisons-update') {
         let pathToFolder = path.resolve(__dirname, '..', '..', 'uploads', 'repositories', req.params.repo_id, req.params.comp_name);
         rimraf(pathToFolder, (err) => {
           if (err) cb(err);
