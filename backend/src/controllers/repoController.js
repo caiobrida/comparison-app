@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 const { Op } = require('sequelize');
+const mkdirp = require('mkdirp');
+const path = require('path');
 
 const User = require('../models/User');
 const Repository = require('../models/Repository');
@@ -58,16 +60,29 @@ module.exports = {
 
     const { permission, name } = req.body;
 
+    let repository = await Repository.findOne({
+      where: {
+        name: {
+          [Op.like]: name,
+        },
+      },
+    });
+
+    if (repository) return res.status(400).json({ message: 'Name already in use' });
+
     if (permission === 'admin' && !user.is_admin) {
       return res.status(403).json({ message: 'Unauthorized' });
     }
 
-    const repository = await Repository.create({
+    repository = await Repository.create({
       permission,
       name,
       owner_user_id: user.id,
     });
 
+    const made = await mkdirp(path.resolve(__dirname, '..', '..', 'uploads', 'repositories', String(repository.dataValues.id)));
+
+    if (!made) return res.status(500).json({ message: 'Internal error' });
     return res.json(repository);
   },
 

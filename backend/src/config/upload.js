@@ -5,7 +5,7 @@ const mkdirp = require('mkdirp');
 module.exports = {
   storage: multer.diskStorage({
     destination: async (req, file, cb) => {
-      const pathToFolder = path.resolve(__dirname, '..', '..', 'uploads', 'comparisons', req.body.name);
+      const pathToFolder = path.resolve(__dirname, '..', '..', 'uploads', 'repositories', req.body.name);
       if (req.body.event === 'comparisons-create') {
         const made = await mkdirp(pathToFolder);
         if (!made) {
