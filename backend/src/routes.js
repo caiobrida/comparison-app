@@ -13,33 +13,33 @@ const comparisonController = require('./controllers/comparisonController');
 const routes = express.Router();
 const upload = multer(uploadConfig);
 
-routes.get('/me', auth.default, userController.show);
-routes.post('/users', upload.single('avatar'), userController.store);
-routes.put('/users', [auth.default, upload.single('avatar')], userController.update);
+routes.get('/api/me', auth.default, userController.show);
+routes.post('/api/users', upload.single('avatar'), userController.store);
+routes.put('/api/users', [auth.default, upload.single('avatar')], userController.update);
 
-routes.post('/auths', authController.store);
+routes.post('/api/auths', authController.store);
 
-routes.get('/repos', auth.verify, repoController.index);
-routes.get('/myrepos', auth.default, repoController.show);
-routes.post('/repos', auth.default, repoController.store);
-routes.put('/repos/:repo_id', auth.default, repoController.update);
-routes.delete('/repos/:repo_id', auth.default, repoController.destroy);
+routes.get('/api/repos', auth.verify, repoController.index);
+routes.get('/api/myrepos', auth.default, repoController.show);
+routes.post('/api/repos', auth.default, repoController.store);
+routes.put('/api/repos/:repo_id', auth.default, repoController.update);
+routes.delete('/api/repos/:repo_id', auth.default, repoController.destroy);
 
-routes.get('/comparisons/:repo_id', comparisonController.index);
-routes.get('/comparisons/show/:comp_id', comparisonController.show);
-routes.post('/comparisons/:repo_id',
+routes.get('/api/comparisons/:repo_id', comparisonController.index);
+routes.get('/api/comparisons/show/:comp_id', comparisonController.show);
+routes.post('/api/comparisons/:repo_id',
   [auth.default, upload.fields([
     { name: 'img1', maxCount: 1 },
     { name: 'img2', maxCount: 1 },
   ])],
   comparisonController.store);
-routes.put('/comparisons/:repo_id/:comp_name',
+routes.put('/api/comparisons/:repo_id/:comp_name',
   [auth.default, authorizeComp, upload.fields([
     { name: 'img1', maxCount: 1 },
     { name: 'img2', maxCount: 1 },
   ])],
   comparisonController.update);
-routes.delete('/comparisons/:repo_id/:comp_name',
+routes.delete('/api/comparisons/:repo_id/:comp_name',
   [auth.default, authorizeComp], comparisonController.destroy);
 
 module.exports = routes;
