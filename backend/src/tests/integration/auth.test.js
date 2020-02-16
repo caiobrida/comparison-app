@@ -4,7 +4,7 @@ const request = require('supertest');
 const User = require('../../models/User');
 let server;
 
-describe('auth middleware', () => {
+describe('auth', () => {
   beforeEach(() => { server = require('../../index') });
   afterEach(async () => {
     await server.close();
@@ -40,4 +40,22 @@ describe('auth middleware', () => {
     const res = await exec();
     expect(res.status).toBe(200);
   });
-})
+
+  it('should return 400 if user email is not found', async() => {
+    const res = await request(server).post('/api/auths', {
+      email: 'invalid@email.com',
+      password: '123456',
+    });
+
+    expect(res.status).toBe(400);
+  });
+
+  it('should return 400 if user password is not valid', async() => {
+    const res = await request(server).post('/api/auths', {
+      email: 'user@outlook.com', // Email must be a valid one
+      password: 'invalidpassword',
+    });
+
+    expect(res.status).toBe(400);
+  });
+});
