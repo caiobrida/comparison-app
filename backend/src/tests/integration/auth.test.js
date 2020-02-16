@@ -42,19 +42,21 @@ describe('auth', () => {
   });
 
   it('should return 400 if user email is not found', async() => {
-    const res = await request(server).post('/api/auths', {
+    const payload = {
       email: 'invalid@email.com',
       password: '123456',
-    });
+    };
+    const res = await request(server).post('/api/auths').send(payload);
 
     expect(res.status).toBe(400);
   });
 
   it('should return 400 if user password is not valid', async() => {
-    const res = await request(server).post('/api/auths', {
+    const payload = {
       email: 'user@outlook.com', // Email must be a valid one
       password: 'invalidpassword',
-    });
+    };
+    const res = await request(server).post('/api/auths').send(payload);
 
     expect(res.status).toBe(400);
   });
