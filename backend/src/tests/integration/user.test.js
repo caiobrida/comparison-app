@@ -2,19 +2,10 @@
 const request = require('supertest');
 
 const User = require('../../models/User');
+const randString = require('../utils/randString');
 
 let server;
 let token;
-
-function makeRandomEmail(length) {
-  var result           = '';
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for ( var i = 0; i < length; i++ ) {
-     result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return `${result}@gmail.com`;
-}
 
 describe('user', () => {
   beforeEach(() => { server = require('../../index'); });
@@ -47,7 +38,8 @@ describe('user', () => {
       });
 
       it('should return 200 if user is valid', async() => {
-        const email = makeRandomEmail(7);
+        const string = randString(7);
+        const email = `${string}@gmail.com`;
         const payload = {
           name: 'name',
           email,
