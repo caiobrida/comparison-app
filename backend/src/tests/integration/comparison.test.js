@@ -90,7 +90,7 @@ describe('comparisons', () => {
       expect(res.status).toBe(400);
     });
 
-    it('should return 200 if comparison is created', async() => {
+    it('should return 200 if comparison is updated', async() => {
       repoId = 18;
       const res = await request(server).put(`/api/comparisons/${repoId}/${compName}`).send(bodyPayload).set('x-auth-token', token);
       expect(res.status).toBe(200);
