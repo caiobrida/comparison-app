@@ -160,9 +160,9 @@ describe('repositories', () => {
       expect(res.status).toBe(403);
     });
 
-    //it('should return 200 if repo has deleted', async() => {
-    //  const res = await request(server).delete(`/api/repos/${repoId}`).set('x-auth-token', token);
-    //  expect(res.status).toBe(200);
-    //});
+    it('should return 200 if repo has deleted', async() => {
+      const res = await request(server).delete(`/api/repos/${repoId}`).set('x-auth-token', token);
+      expect(res.status).toBe(200);
+    });
   });
 });
