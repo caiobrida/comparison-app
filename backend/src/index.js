@@ -1,5 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
+const helmet = require('helmet');
 const path = require('path');
 
 const routes = require('./routes');
@@ -10,6 +12,8 @@ require('./database');
 const app = express();
 
 app.use(morgan('common'));
+app.use(cors());
+app.use(helmet());
 app.use(express.json());
 
 app.use('/users/files', express.static(path.resolve(__dirname, '..', 'uploads', 'users')));
