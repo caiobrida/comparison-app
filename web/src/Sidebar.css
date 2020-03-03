@@ -14,7 +14,7 @@ aside form {
 aside form .inputGroup {
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 35px;
   width: 100%;
   max-width: 240px;
 }
@@ -29,19 +29,45 @@ aside form .inputGroup {
 
 .inputGroup label {
   color: #fff;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
 }
 
 aside .btnGroup {
   display: flex;
   flex-direction: column;
-  margin-top: 90px;
+  margin-top: 80px;
   width: 206px;
 }
 
 aside .btnGroup button {
-  margin-bottom: 45px;
+  margin-bottom: 35px;
   width: 100%;
   color: #fff;
+}
+
+label#avatar {
+  display: flex;
+  border: 1px solid #3e3d3d;
+  border-radius: 100%;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  transition: .2s;
+}
+
+label#avatar:hover {
+  opacity: .5;
+}
+
+label#avatar input {
+  display: none;
+}
+
+label#avatar.hasAvatar {
+  border: 0;
 }
