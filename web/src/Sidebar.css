@@ -48,7 +48,7 @@ aside .btnGroup button {
 
 label#avatar {
   display: flex;
-  border: 1px solid #3e3d3d;
+  border: 1px solid #fff;
   border-radius: 100%;
   width: 100px;
   height: 100px;
