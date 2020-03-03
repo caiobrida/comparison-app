@@ -1,16 +1,12 @@
 import React from 'react';
 
-import LoginForm from '../components/LoginForm';
-import RegisterForm from '../components/RegisterForm';
-import UpdateForm from '../components/UpdateForm';
-
-import '../Sidebar.css';
+import Aside from '../components/Aside/Aside';
 
 function Dashboard() {
   return(
-    <aside>
-      <UpdateForm />
-    </aside>
+    <>
+      <Aside />
+    </>
   );
 }
 

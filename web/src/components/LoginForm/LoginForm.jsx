@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function LoginForm() {
+function LoginForm({ handleChangeForm }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -28,7 +28,7 @@ function LoginForm() {
       </div>
       <div className='btnGroup'>
         <button className='mainBtn'>Log in</button>
-        <button className='secondaryBtn'>Sign in</button>
+        <button onClick={ () => handleChangeForm('register') } className='secondaryBtn'>Sign in</button>
       </div>
     </form>
   );

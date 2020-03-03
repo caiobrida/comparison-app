@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 
-function RegisterForm() {
+function RegisterForm({ handleChangeForm }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -70,7 +70,7 @@ function RegisterForm() {
       </div>
       <div className='btnGroup'>
         <button className='mainBtn'>Create Account</button>
-        <button className='secondaryBtn'>Cancel</button>
+        <button onClick={ () => handleChangeForm('login') } className='secondaryBtn'>Cancel</button>
       </div>
     </form>
   );
