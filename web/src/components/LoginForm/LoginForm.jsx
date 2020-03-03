@@ -28,7 +28,7 @@ function LoginForm({ handleChangeForm }) {
       </div>
       <div className='btnGroup'>
         <button className='mainBtn'>Log in</button>
-        <button onClick={ () => handleChangeForm('register') } className='secondaryBtn'>Sign in</button>
+        <button type='button' onClick={ () => handleChangeForm('register') } className='secondaryBtn'>Sign in</button>
       </div>
     </form>
   );

@@ -70,7 +70,7 @@ function RegisterForm({ handleChangeForm }) {
       </div>
       <div className='btnGroup'>
         <button className='mainBtn'>Create Account</button>
-        <button onClick={ () => handleChangeForm('login') } className='secondaryBtn'>Cancel</button>
+        <button type='button' onClick={ () => handleChangeForm('login') } className='secondaryBtn'>Cancel</button>
       </div>
     </form>
   );
