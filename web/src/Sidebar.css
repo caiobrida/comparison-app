@@ -1,0 +1,47 @@
+aside {
+  width: 280px;
+  background: #212121;
+  margin-left: 5px;
+}
+
+aside form {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+aside form .inputGroup {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  width: 100%;
+  max-width: 240px;
+}
+
+.inputGroup input {
+  background: transparent;
+  border: 1px solid #3e3d3d;
+  height: 35px;
+  padding: 5px;
+  color: #fff;
+}
+
+.inputGroup label {
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+aside .btnGroup {
+  display: flex;
+  flex-direction: column;
+  margin-top: 90px;
+  width: 206px;
+}
+
+aside .btnGroup button {
+  margin-bottom: 45px;
+  width: 100%;
+  color: #fff;
+}
