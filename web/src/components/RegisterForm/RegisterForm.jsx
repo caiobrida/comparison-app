@@ -1,11 +1,15 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
-function RegisterForm({ handleChangeForm }) {
+function RegisterForm({ handleChangeForm, setError }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [avatar, setAvatar] = useState(null);
+
+  useEffect(() => {
+    setError('');
+  }, [setError]);
 
   const preview = useMemo(
     () => {

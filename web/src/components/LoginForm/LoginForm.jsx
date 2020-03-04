@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function LoginForm({ handleChangeForm }) {
+import auth from '../../services/authService';
+
+function LoginForm({ handleChangeForm, setError }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    setError('');
+  }, [setError]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const res = await auth.login(email, password);
+    if (res.status === 400) setError(res.message);
+  }
+
   return(
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className='inputGroup'>
         <label htmlFor='emailInput'>Email</label>
         <input 
