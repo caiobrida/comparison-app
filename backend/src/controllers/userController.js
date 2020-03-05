@@ -6,9 +6,8 @@ const User = require('../models/User');
 
 module.exports = {
   async show(req, res) {
-    const user = await User.findByPk(req.user.id, {
-      attributes: ['id', 'name', 'email'],
-    });
+    const user = await User.findByPk(req.user.id);
+    if (!user) return res.status(400).json({ message: 'User not found' });
     return res.json(user);
   },
 

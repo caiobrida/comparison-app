@@ -83,3 +83,15 @@ span.errorDisplay {
   padding: 10px;
   background: rgb(107, 107, 107);
 }
+
+.spanGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+  font-weight: lighter;
+  font-size: 18px;
+  margin-top: 20px;
+  line-height: 2;
+}

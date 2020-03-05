@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 
-function RegisterForm({ handleChangeForm, setError }) {
+import userService from '../../services/userService';
+
+function RegisterForm({ handleChangeContent, setError }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,8 +20,22 @@ function RegisterForm({ handleChangeForm, setError }) {
     [avatar]
   );
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const data = new FormData();
+
+    data.append('avatar', avatar || 'default.jpg');
+    data.append('name', name);
+    data.append('email', email);
+    data.append('password', password);
+
+    const res = await userService.register(data);
+    if(res.status === 400) setError(res.message);
+    else handleChangeContent('login');
+  }
+
   return(
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className='inputGroup'>
         <label
           id='avatar'
@@ -74,7 +90,7 @@ function RegisterForm({ handleChangeForm, setError }) {
       </div>
       <div className='btnGroup'>
         <button className='mainBtn'>Create Account</button>
-        <button type='button' onClick={ () => handleChangeForm('login') } className='secondaryBtn'>Cancel</button>
+        <button type='button' onClick={ () => handleChangeContent('login') } className='secondaryBtn'>Cancel</button>
       </div>
     </form>
   );

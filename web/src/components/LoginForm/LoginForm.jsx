@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import auth from '../../services/authService';
 
-function LoginForm({ handleChangeForm, setError }) {
+function LoginForm({ handleChangeContent, setError, logUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,6 +14,7 @@ function LoginForm({ handleChangeForm, setError }) {
     e.preventDefault();
     const res = await auth.login(email, password);
     if (res.status === 400) setError(res.message);
+    else logUser();
   }
 
   return(
@@ -40,7 +41,7 @@ function LoginForm({ handleChangeForm, setError }) {
       </div>
       <div className='btnGroup'>
         <button className='mainBtn'>Log in</button>
-        <button type='button' onClick={ () => handleChangeForm('register') } className='secondaryBtn'>Sign in</button>
+        <button type='button' onClick={ () => handleChangeContent('register') } className='secondaryBtn'>Sign in</button>
       </div>
     </form>
   );

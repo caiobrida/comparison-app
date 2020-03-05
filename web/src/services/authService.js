@@ -14,6 +14,7 @@ async function login(email, password) {
     
     const { token } = response.data;
     localStorage.setItem(tokenKey, token);
+    api.setJwt(token);
     return {
       status: 200
     }

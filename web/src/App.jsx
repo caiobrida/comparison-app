@@ -2,7 +2,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import Header from './components/Header';
-import Dashboard from './pages/Dashboard';
+import Routes from './routes';
 
 import './App.css'
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       <ToastContainer />
       <Header />
-      <Dashboard />
+      <Routes />
     </div>
   );
 }
