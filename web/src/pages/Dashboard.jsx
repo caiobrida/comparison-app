@@ -3,6 +3,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import auth from '../services/authService';
 
 import Aside from '../components/Aside/Aside';
+import MainContent from '../components/MainContent/MainContent';
 
 function Dashboard() {
   const [user, setUser] = useState(null);
@@ -20,6 +21,7 @@ function Dashboard() {
   return(
     <>
       <Aside deslogUser={deslogUser} logUser={logUser} user={user}/>
+      <MainContent />
     </>
   );
 }

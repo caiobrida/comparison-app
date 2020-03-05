@@ -16,9 +16,20 @@ body {
   -webkit-font-smoothing: antialiased !important;
 }
 
+.App {
+  display: grid;
+  grid-template-areas: "header header"
+                        "aside main";
+  grid-gap: 20px;
+}
+
 body, input, button {
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
+}
+
+header {
+  grid-area: header;
 }
 
 header h1 {

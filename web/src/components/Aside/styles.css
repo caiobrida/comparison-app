@@ -2,6 +2,8 @@ aside {
   width: 280px;
   background: #212121;
   margin-left: 5px;
+  grid-area: aside;
+  max-height: 484px;
 }
 
 aside form {
