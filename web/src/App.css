@@ -16,11 +16,8 @@ body {
   -webkit-font-smoothing: antialiased !important;
 }
 
-.App {
-  display: grid;
-  grid-template-areas: "header header"
-                        "aside main";
-  grid-gap: 20px;
+.container { 
+  display: block;
 }
 
 body, input, button {

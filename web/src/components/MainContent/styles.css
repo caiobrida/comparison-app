@@ -1,7 +1,7 @@
 main {
   background: #212121;
   color: #fff;
-  width: 1030px;
-  min-height: 430px;
-  grid-area: main;
+  flex: 1;
+  margin-left: 10px;
+  margin-right: 10px;
 }
