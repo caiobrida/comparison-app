@@ -7,21 +7,21 @@ import LoggedAside from '../LoggedAside/LoggedAside';
 
 import './styles.css'
 
-function Aside({ user, logUser, deslogUser, setUser }) {
+function Aside({ user, decodeUserJwt, deslogUser }) {
   const [error, setError] = useState('');
   const [content, setContent] = useState(null);
 
   const handleChangeContent = useCallback((form)=>{
     if (form === 'register') setContent(<RegisterForm setError={setError} handleChangeContent={ handleChangeContent }/>);
-    else if (form === 'login') setContent(<LoginForm logUser={logUser} setError={setError} handleChangeContent={ handleChangeContent }/>);
-    else if (form === 'update') setContent(<UpdateForm userData={user} logUser={logUser} setError={setError} handleChangeContent={ handleChangeContent }/>);
-    else if (form === 'logged') setContent(<LoggedAside setUser={setUser} handleChangeContent={ handleChangeContent } deslogUser={deslogUser}/>);
-  },[logUser, user, deslogUser, setUser]);
+    else if (form === 'login') setContent(<LoginForm decodeUserJwt={decodeUserJwt} setError={setError} handleChangeContent={ handleChangeContent }/>);
+    else if (form === 'update') setContent(<UpdateForm userData={user} decodeUserJwt={decodeUserJwt} setError={setError} handleChangeContent={ handleChangeContent }/>);
+    else if (form === 'logged') setContent(<LoggedAside handleChangeContent={ handleChangeContent } deslogUser={deslogUser}/>);
+  },[decodeUserJwt, user, deslogUser]);
 
   useEffect(() => {
-    user ? setContent(<LoggedAside setUser={setUser} handleChangeContent={ handleChangeContent } deslogUser={deslogUser}/>)
-         : setContent(<LoginForm logUser={logUser} setError={setError} handleChangeContent={ handleChangeContent }/>)
-  }, [logUser, handleChangeContent, setError, deslogUser, user, setUser]);
+    user ? setContent(<LoggedAside handleChangeContent={ handleChangeContent } deslogUser={deslogUser}/>)
+         : setContent(<LoginForm decodeUserJwt={decodeUserJwt} setError={setError} handleChangeContent={ handleChangeContent }/>)
+  }, [decodeUserJwt, handleChangeContent, setError, deslogUser, user]);
 
 
   return(

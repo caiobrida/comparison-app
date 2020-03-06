@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 
 import userService from '../../services/userService';
 
-function UpdateForm({ userData, handleChangeContent, setError, logUser }) {
+function UpdateForm({ userData, handleChangeContent, setError, decodeUserJwt }) {
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState(null);
   const [newAvatar, setNewAvatar] = useState(null);
@@ -34,7 +34,7 @@ function UpdateForm({ userData, handleChangeContent, setError, logUser }) {
     if (res.status !== 200) setError(res.message);
     else {
       localStorage.setItem('token', res.token);
-      logUser();
+      decodeUserJwt();
       handleChangeContent('logged');
     } 
   }

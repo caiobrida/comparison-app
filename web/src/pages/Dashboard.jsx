@@ -12,7 +12,7 @@ function Dashboard() {
     setUser(auth.getCurrentUser());
   }, []);
 
-  const logUser = useCallback(() => {
+  const decodeUserJwt = useCallback(() => {
     setUser(auth.getCurrentUser());
   }, []);
 
@@ -20,7 +20,7 @@ function Dashboard() {
 
   return(
     <div className='container'>
-      <Aside setUser={setUser} deslogUser={deslogUser} logUser={logUser} user={user}/>
+      <Aside deslogUser={deslogUser} decodeUserJwt={decodeUserJwt} user={user}/>
       <MainContent />
     </div>
   );

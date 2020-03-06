@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import auth from '../../services/authService';
 
-function LoginForm({ handleChangeContent, setError, logUser }) {
+function LoginForm({ handleChangeContent, setError, decodeUserJwt }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,7 +14,7 @@ function LoginForm({ handleChangeContent, setError, logUser }) {
     e.preventDefault();
     const res = await auth.login(email, password);
     if (res.status === 400) setError(res.message);
-    else logUser();
+    else decodeUserJwt();
   }
 
   return(
