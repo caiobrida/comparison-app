@@ -2,25 +2,17 @@ import React, { useState, useMemo, useEffect } from 'react';
 
 import userService from '../../services/userService';
 
-function UpdateForm({ handleChangeContent, setError }) {
+function UpdateForm({ userData, handleChangeContent, setError, logUser }) {
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState(null);
   const [newAvatar, setNewAvatar] = useState(null);
 
   useEffect(() => {
-    async function loadUser() {
-      const { message, status, response } = await userService.getUser();
-      if (status === 400) return console.log(message);
-
-      const { avatar_url,  name } = response.data;
-      setName(name);
-      setAvatar(avatar_url);
-      localStorage.setItem('avatar', avatar_url);
+    if (userData){
+      setAvatar(localStorage.getItem('avatar'));
+      setName(userData.name);
     }
-    loadUser();
-
-    setAvatar(localStorage.getItem('avatar'));
-  }, []);
+  }, [userData]);
   
   const preview = useMemo(
     () => {
@@ -40,7 +32,11 @@ function UpdateForm({ handleChangeContent, setError }) {
 
     const res = await userService.updateUser(data);
     if (res.status !== 200) setError(res.message);
-    else handleChangeContent('logged');
+    else {
+      localStorage.setItem('token', res.token);
+      logUser();
+      handleChangeContent('logged');
+    } 
   }
   
   return(
@@ -68,7 +64,7 @@ function UpdateForm({ handleChangeContent, setError }) {
 
       <div className='btnGroup'>
         <button className='mainBtn'>Update</button>
-        <button type='button' onClick={() => handleChangeContent('logged')} className='secondaryBtn'>Cancel</button>
+        <button onClick={() => handleChangeContent('logged')} className='secondaryBtn'>Cancel</button>
       </div>
     </form>
   );

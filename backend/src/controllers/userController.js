@@ -58,6 +58,8 @@ module.exports = {
 
     await user.save();
 
-    return res.json(user);
+    const token = user.genAuthToken();
+
+    return res.json({ token });
   },
 };

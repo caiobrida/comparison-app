@@ -34,6 +34,7 @@ async function updateUser(user) {
   try {
     const response = await api.put('/users', user);
     const { token } = response.data;
+    api.setJwt(token);
     return {
       status: 200,
       token,
