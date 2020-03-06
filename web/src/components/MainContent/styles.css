@@ -2,6 +2,7 @@ main {
   background: #212121;
   color: #fff;
   flex: 1;
+  min-height: 430px;
   margin-left: 10px;
   margin-right: 10px;
 }
