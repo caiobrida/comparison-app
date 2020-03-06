@@ -20,7 +20,7 @@ function Dashboard() {
 
   return(
     <div className='container'>
-      <Aside deslogUser={deslogUser} logUser={logUser} user={user}/>
+      <Aside setUser={setUser} deslogUser={deslogUser} logUser={logUser} user={user}/>
       <MainContent />
     </div>
   );

@@ -31,7 +31,8 @@ function loginWithJwt(jwt) {
 }
 
 function logout() {
-  localStorage.removeItem(tokenKey);  
+  localStorage.removeItem(tokenKey);
+  localStorage.removeItem('avatar');
 }
 
 function getCurrentUser() {

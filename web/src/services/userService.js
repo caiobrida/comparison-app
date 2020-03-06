@@ -30,7 +30,24 @@ async function getUser() {
   }
 }
 
+async function updateUser(user) {
+  try {
+    const response = await api.put('/users', user);
+    const { token } = response.data;
+    return {
+      status: 200,
+      token,
+    }
+  } catch (err) {
+    return {
+      status: 400,
+      message: err.response.data.message,
+    }
+  }
+}
+
 export default {
   register,
   getUser,
+  updateUser,
 }

@@ -17,6 +17,7 @@ function LoggedAside({ deslogUser, handleChangeContent }) {
       const { avatar_url,  name } = response.data;
       setName(name);
       setAvatar(avatar_url);
+      localStorage.setItem('avatar', avatar_url);
     }
     loadUser();
   },[])
