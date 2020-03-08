@@ -1,11 +1,13 @@
 import React from 'react';
 
+import RepositoriesList from '../RepositoriesList/RepositoriesList';
+
 import './styles.css';
 
 function MainContent() {
   return(
     <main>
-      <h1>Main</h1>
+      <RepositoriesList />
     </main>
   );
 }

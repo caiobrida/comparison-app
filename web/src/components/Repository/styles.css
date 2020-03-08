@@ -1,0 +1,21 @@
+ul {
+  list-style: none;
+  margin: auto;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+ul li {
+  font-size: 18px;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  padding: 5px;
+  margin-top: 15px;
+  transition: .1s;
+}
+
+ul li:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
