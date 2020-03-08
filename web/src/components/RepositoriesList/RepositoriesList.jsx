@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import repoService from '../../services/repoService';
 
 import Repository from '../Repository/Repository';
 
-function RepositoriesList({ data }) {
+function RepositoriesList() {
+  const [repos, setRepos] = useState([]);
+
+  useEffect(() => {
+    async function loadRepos() {
+      const { data } = await repoService.getRepos();
+      setRepos(data);
+    }
+    loadRepos();
+  }, []);
+
   return(
-    <>
-      { data ? data.repositories.map(repo => (
-        <Repository data={data} repo={repo} key={repo.id} />  
-      )) : <h1>Empty</h1> }
-    </>
+    <ul>
+      { repos.map(repo => (
+        <Repository key={repo.id} repo={repo} />
+      )) }
+    </ul>
   );
 }
 

@@ -9,14 +9,10 @@ module.exports = {
     const permissions = ['owner_user', 'all'];
     if (req.user && req.user.is_admin) permissions.push('admin');
 
-    const repos = await User.findAll({
-      attributes: ['id', 'name', 'email'],
-      include: {
-        association: 'repositories',
-        where: {
-          permission: {
-            [Op.in]: permissions,
-          },
+    const repos = await Repository.findAll({
+      where: {
+        permission: {
+          [Op.in]: permissions,
         },
       },
     });

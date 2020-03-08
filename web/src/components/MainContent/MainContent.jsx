@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RepositoriesList from '../RepositoriesData/RepositoriesData';
+import RepositoriesList from '../RepositoriesList/RepositoriesList';
 
 import './styles.css';
 

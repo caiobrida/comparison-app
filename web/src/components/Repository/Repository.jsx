@@ -4,9 +4,13 @@ import { faFolder } from '@fortawesome/free-solid-svg-icons';
 
 import './styles.css';
 
-function Repository({ data, repo }) {
+function Repository({ repo }) {
   return(
-    <li key={repo.id}><FontAwesomeIcon icon={faFolder} /> {repo.name} {data.name}</li>
+    <li>
+      <FontAwesomeIcon icon={faFolder} /> 
+      <span id='name'>{repo.name}</span>
+      <span id='date'>{new Date(repo.createdAt).toLocaleString()}</span>
+    </li>
   )
 }
 

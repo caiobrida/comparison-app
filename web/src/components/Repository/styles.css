@@ -19,3 +19,14 @@ ul li:hover {
   font-weight: bold;
   cursor: pointer;
 }
+
+ul li span#date {
+  font-size: 11px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+ul li span#name {
+  margin-left: 8px;
+}
