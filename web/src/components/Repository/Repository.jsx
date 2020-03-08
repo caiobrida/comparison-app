@@ -4,14 +4,10 @@ import { faFolder } from '@fortawesome/free-solid-svg-icons';
 
 import './styles.css';
 
-function Repository({ data }) {
+function Repository({ data, repo }) {
   return(
-    <>
-      { data ? data.repositories.map(repo => (
-        <li key={repo.id}><FontAwesomeIcon icon={faFolder} /> {repo.name} {data.name}</li>  
-      )) : <h1>Empty</h1> }
-    </>
-  );
+    <li key={repo.id}><FontAwesomeIcon icon={faFolder} /> {repo.name} {data.name}</li>
+  )
 }
 
 export default Repository;
