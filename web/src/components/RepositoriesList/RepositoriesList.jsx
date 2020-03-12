@@ -4,7 +4,7 @@ import repoService from '../../services/repoService';
 
 import Repository from '../Repository/Repository';
 
-function RepositoriesList() {
+function RepositoriesList({ user }) {
   const [repos, setRepos] = useState([]);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function RepositoriesList() {
       setRepos(data);
     }
     loadRepos();
-  }, []);
+  }, [user]);
 
   return(
     <ul>

@@ -31,6 +31,7 @@ function loginWithJwt(jwt) {
 }
 
 function logout() {
+  api.setJwt(null);
   localStorage.removeItem(tokenKey);
   localStorage.removeItem('avatar');
 }

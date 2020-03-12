@@ -4,10 +4,10 @@ import RepositoriesList from '../RepositoriesList/RepositoriesList';
 
 import './styles.css';
 
-function MainContent() {
+function MainContent({ user }) {
   return(
     <main>
-      <RepositoriesList />
+      <RepositoriesList user={user} />
     </main>
   );
 }

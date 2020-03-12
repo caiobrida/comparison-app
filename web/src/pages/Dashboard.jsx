@@ -21,7 +21,7 @@ function Dashboard() {
   return(
     <div className='container'>
       <Aside deslogUser={deslogUser} decodeUserJwt={decodeUserJwt} user={user}/>
-      <MainContent />
+      <MainContent user={ user }/>
     </div>
   );
 }
